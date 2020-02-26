@@ -19,15 +19,26 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Source\Component.h" />
-    <ClInclude Include="Source\ComponentArray.h" />
-    <ClInclude Include="Source\ComponentManager.h" />
-    <ClInclude Include="Source\TestComponent.h" />
-    <ClInclude Include="Source\Types\EntityId.h" />
+    <ClInclude Include="Component.h" />
+    <ClInclude Include="ComponentArray.h" />
+    <ClInclude Include="ComponentManager.h" />
+    <ClInclude Include="FakeByteEngine.h" />
+    <ClInclude Include="MoverSystem.h" />
+    <ClInclude Include="PlayerComponent.h" />
+    <ClInclude Include="PlayerMovementSystem.h" />
+    <ClInclude Include="RenderComponent.h" />
+    <ClInclude Include="RenderSystem.h" />
+    <ClInclude Include="System.h" />
+    <ClInclude Include="SystemManager.h" />
+    <ClInclude Include="Timer.h" />
+    <ClInclude Include="Types\Constants.h" />
+    <ClInclude Include="Types\EntityId.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Source\ComponentManager.cpp" />
-    <ClCompile Include="Source\Main.cpp" />
+    <ClCompile Include="FakeByteEngine.cpp" />
+    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="System.cpp" />
+    <ClCompile Include="SystemManager.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
@@ -95,6 +106,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
+      <FloatingPointModel>Strict</FloatingPointModel>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
