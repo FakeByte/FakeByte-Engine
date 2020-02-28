@@ -1,22 +1,42 @@
 #pragma once
 #include "SystemManager.h"
-#include "PlayerComponent.h"
-#include "RenderComponent.h"
+#include "System.h"
 #include "ComponentManager.h"
 #include "Timer.h"
 
-class BenchMark {
+class IntBenchMarkSystem : public System {
+	void Update() {
+		system("cls");
+		for (size_t i = 0; i < compatibleEntities.size(); i++) {
+			std::cout << ComponentManager::GetInstance().GetComponent<int>(compatibleEntities[i]);
+		}
+	}
+};
+
+class StringBenchMarkSystem : public System {
+	void Update() {
+		system("cls");
+		for (size_t i = 0; i < compatibleEntities.size(); i++) {
+			std::cout << ComponentManager::GetInstance().GetComponent<std::string>(compatibleEntities[i]);
+		}
+	}
+};
+
+class Benchmark {
 public:
-	static BenchMark& GetInstance() {
-		static BenchMark instance;
+	static Benchmark& GetInstance() {
+		static Benchmark instance;
 		return instance;
 	}
 
-	void BenchMarkTest(double x);
+	void BenchmarkTest(long long dong);
+
+	void BenchmarkStringAccessTime(std::string x, char searchTerm);
+
 private:
 	//Singleton
-	BenchMark() = default;
-	~BenchMark() = default;
-	BenchMark(const BenchMark&) = delete;
-	BenchMark& operator=(const BenchMark&) = delete;
+	Benchmark() = default;
+	~Benchmark() = default;
+	Benchmark(const Benchmark&) = delete;
+	Benchmark& operator=(const Benchmark&) = delete;
 };

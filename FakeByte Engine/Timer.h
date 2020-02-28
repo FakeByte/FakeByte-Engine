@@ -62,6 +62,18 @@ public:
 		return std::chrono::duration_cast<std::chrono::duration<double, std::ratio<1> >>
 			(std::chrono::high_resolution_clock::now() - startTimepoint).count();
 	}
+
+	long long elapsedNanoseconds() const {
+		auto endTimepoint = std::chrono::high_resolution_clock::now();
+
+		auto start = std::chrono::time_point_cast<std::chrono::nanoseconds>(startTimepoint).time_since_epoch().count();
+		auto end = std::chrono::time_point_cast<std::chrono::nanoseconds>(endTimepoint).time_since_epoch().count();
+
+		long long nanoseconds = end - start;
+
+		return nanoseconds;
+	}
+
 private:
 	std::string name;
 	std::chrono::time_point<std::chrono::high_resolution_clock> startTimepoint;
