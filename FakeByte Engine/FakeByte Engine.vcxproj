@@ -23,6 +23,7 @@
     <ClInclude Include="ComponentArray.h" />
     <ClInclude Include="ComponentManager.h" />
     <ClInclude Include="FakeByteEngine.h" />
+    <ClInclude Include="BenchMark.h" />
     <ClInclude Include="MoverSystem.h" />
     <ClInclude Include="PlayerComponent.h" />
     <ClInclude Include="PlayerMovementSystem.h" />
@@ -35,6 +36,7 @@
     <ClInclude Include="Types\EntityId.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="BenchMark.cpp" />
     <ClCompile Include="FakeByteEngine.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="System.cpp" />
