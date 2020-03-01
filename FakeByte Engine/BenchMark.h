@@ -5,21 +5,27 @@
 #include "Timer.h"
 
 class IntBenchMarkSystem : public System {
+	void PreUpdate() {}
+
 	void Update() {
-		system("cls");
 		for (size_t i = 0; i < compatibleEntities.size(); i++) {
-			std::cout << ComponentManager::GetInstance().GetComponent<int>(compatibleEntities[i]);
+			ComponentManager::GetInstance().GetComponent<int>(compatibleEntities[i]);
 		}
 	}
+
+	void PostUpdate() {}
 };
 
 class StringBenchMarkSystem : public System {
+	void PreUpdate() {}
+
 	void Update() {
-		system("cls");
 		for (size_t i = 0; i < compatibleEntities.size(); i++) {
-			std::cout << ComponentManager::GetInstance().GetComponent<std::string>(compatibleEntities[i]);
+			ComponentManager::GetInstance().GetComponent<std::string>(compatibleEntities[i]);
 		}
 	}
+
+	void PostUpdate() {}
 };
 
 class Benchmark {
@@ -29,9 +35,9 @@ public:
 		return instance;
 	}
 
-	void BenchmarkTest(long long dong);
+	void BenchmarkTest(long long amount);
 
-	void BenchmarkStringAccessTime(std::string x, char searchTerm);
+	void BenchmarkString(std::string x, char searchTerm);
 
 private:
 	//Singleton

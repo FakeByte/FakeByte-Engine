@@ -36,10 +36,12 @@ int main() {
 		MoverSystem m2;
 		m2.RequireComponent(p.getType());*/
 
-		Benchmark::GetInstance().BenchmarkTest(1000);
-		Benchmark::GetInstance().BenchmarkTest(2000);	
+		//IntBenchMarkSystem bm1;
 
-		//Benchmark::GetInstance().BenchmarkAccessTime("Acess Acess AAAA acess", 'A');
+		Benchmark::GetInstance().BenchmarkTest(100);
+		Benchmark::GetInstance().BenchmarkTest(200);
+
+		Benchmark::GetInstance().BenchmarkString("Acess Acess AAAA acess", 'A');
 
 		/*FakeByteEngine::Initialize();
 		FakeByteEngine::Start();
