@@ -1,20 +1,48 @@
-#include "BenchMark.h"
+#include "Benchmark.h"
 
-//DELET THIS
+#include <fstream>
 #include <iostream>
 
+#include <string>
+
+
+void Benchmark::BenchmarkTest() {
+	for (int i = 100; i <= 1000000; ) {
+		GetInstance().BenchmarkTestImplementation(i);
+		i *= 10;
+	}
+}
 
 /**
 		 * Integer Benchmark, creates and delete entities according to the inputted amount/index
 		 *
 		 * @param amount How many times you want to make a new entity and component.
 		 */
-void Benchmark::BenchmarkTest(long long amount) {
-	IntBenchMarkSystem system1;
+void Benchmark::BenchmarkTestImplementation(long long amount) {
+	std::string fileName = "benchmark-result.html";
+	bool fileExists = true;
+#pragma warning(suppress : 4996)
+	if (FILE *file = std::fopen(fileName.c_str(), "r")) {
+		fclose(file);
+	} else {
+		fileExists = false;
+	}
 
-	std::cout << "\n\nBenchmarked input amount: " << amount << "\n" << std::endl;
+	std::ofstream outputFile;
+	outputFile.open("benchmark-result.html", std::fstream::app);
 
-	std::cout << "Benchmark #1: Creating Entities" << "\n" << std::endl;
+	if (!fileExists) {
+		//HTML Header
+		outputFile << "<!DOCTYPE html><html><head><style>table{font - family: arial, sans - serif; border - collapse: collapse; width: 100 % ;} td, th{ border: 1px solid #dddddd; text - align: left; padding: 8px;} tr:nth - child(even) { background - color: #dddddd;}</style></head><body>";
+		//Headline
+		outputFile << "<h2>Integer Benchmark</h2>";
+		//Table Head
+		outputFile << "<table><tr><th>Amount</th><th>Creation</th><th>Adding</th><th>Step</th><th>Destroying</th></tr>";
+	}
+
+	//Amount
+	outputFile << "<tr><td>" << amount << "</td>";
+
 	Timer t("BENCHMARKING");
 
 	//1: Make x number of entities
@@ -23,32 +51,35 @@ void Benchmark::BenchmarkTest(long long amount) {
 	}
 
 	t.Stop();
-	std::vector<entity> entities = ComponentManager::GetInstance().GetEntityVector();
-	long long avg = t.elapsedNanoseconds() / amount;
-	std::cout << "Average Time for Creating Entities: " << avg << " ns\n" << std::endl;
-	system("pause");
+	
+	//Creating
+	outputFile << "<td>" << t.elapsedSeconds() << "</td>";
+
 
 	//2: Adding components to an entity
 
-	std::cout << "\nBenchmark #2: Adding Components" << "\n" << std::endl;
-
-
+	std::vector<entity> entities = ComponentManager::GetInstance().GetEntityVector();
 	t.reset();
 	for (int i = 0; i < entities.size(); i++) {
 		ComponentManager::GetInstance().AddComponent(entities[i], i);
 	}
 
-	system1.RequireComponent(typeid(int));
-	SystemManager::GetInstance().Step();
 	t.Stop();
-	avg = t.elapsedNanoseconds() / amount;
-	std::cout << "Average Time for Adding Components: " << avg << " ns\n" << std::endl;
-	system("pause");
 
-	//3: Time to destroy x entities with components
+	//Adding
+	outputFile << "<td>" << t.elapsedSeconds() << "</td>";
 
-	std::cout << "\nBenchmark #3: Destroying Entities" << "\n" << std::endl;
 
+	//Systems Test
+	IntBenchMarkSystem system1;
+	system1.RequireComponent(typeid(int));
+	t.reset();
+	SystemManager::GetInstance().Step();
+	outputFile << "<td>" << t.elapsedSeconds() << "</td>";
+
+
+
+	//3: Time to destroy x entities with component
 	t.reset();
 	SystemManager::GetInstance().Step();
 	for(int i=0;i < entities.size();i++){ 
@@ -56,9 +87,9 @@ void Benchmark::BenchmarkTest(long long amount) {
 	}
 
 	t.Stop();
-	avg = t.elapsedNanoseconds() / amount;
-	std::cout << "Average Time for Destroying Entities: " << avg << " ns\n" << std::endl;
-	system("pause");
+	outputFile << "<td>" << t.elapsedSeconds() << "</td>";
+	//outputFile << "</table></br>";
+	outputFile.close();
 }
 
 /**
@@ -67,7 +98,7 @@ void Benchmark::BenchmarkTest(long long amount) {
 		 * @param inputtedString is for the string input to search from
 		 * @param searchTerm is for which character would you like to search for within the String
 		 */
-void Benchmark::BenchmarkString(std::string inputtedString, char searchTerm) {
+void Benchmark::BenchmarkStringImplementation(std::string inputtedString, char searchTerm) {
 	StringBenchMarkSystem system2;
 
 	entity e = ComponentManager::GetInstance().CreateEntity();

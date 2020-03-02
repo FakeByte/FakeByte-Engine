@@ -77,6 +77,8 @@ private:
 
 	std::vector<System*> systems;						//Vector of all registered systems
 
+	bool updateCompatibleEntities = true;
+
 	//Implementation methods
 	void RegisterSystemImplementation(System &system);	
 	void SortSystemsArrayImplementation();

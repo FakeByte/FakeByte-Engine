@@ -35,9 +35,9 @@ public:
 		return instance;
 	}
 
-	void BenchmarkTest(long long amount);
+	static void BenchmarkTest();
 
-	void BenchmarkString(std::string x, char searchTerm);
+	static void BenchmarkString();
 
 private:
 	//Singleton
@@ -45,4 +45,9 @@ private:
 	~Benchmark() = default;
 	Benchmark(const Benchmark&) = delete;
 	Benchmark& operator=(const Benchmark&) = delete;
+	//Singleton
+
+	void BenchmarkTestImplementation(long long amount);
+
+	void BenchmarkStringImplementation(std::string x, char searchTerm);
 };

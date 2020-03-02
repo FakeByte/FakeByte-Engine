@@ -4,7 +4,7 @@
 #include "SystemManager.h"
 #include "System.h"
 #include "FakeByteEngine.h"
-#include "BenchMark.h"
+#include "Benchmark.h"
 
 #include "Timer.h"
 #include "RenderSystem.h"
@@ -38,10 +38,9 @@ int main() {
 
 		//IntBenchMarkSystem bm1;
 
-		Benchmark::GetInstance().BenchmarkTest(100);
-		Benchmark::GetInstance().BenchmarkTest(200);
+		Benchmark::BenchmarkTest();
 
-		Benchmark::GetInstance().BenchmarkString("Acess Acess AAAA acess", 'A');
+		//Benchmark::BenchmarkString();
 
 		/*FakeByteEngine::Initialize();
 		FakeByteEngine::Start();

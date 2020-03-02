@@ -22,7 +22,7 @@ void SystemManager::Step() {
 }
 
 void SystemManager::FindCompatibleEntities() {
-	GetInstance().FindCompatibleEntitiesImplementation();
+	GetInstance().updateCompatibleEntities = true;
 }
 
 void SystemManager::RegisterSystemImplementation(System & system) {
@@ -50,6 +50,10 @@ void SystemManager::SortSystemsArrayImplementation() {
 }
 
 void SystemManager::StepImplementation() {
+	if (updateCompatibleEntities) {
+		FindCompatibleEntitiesImplementation();
+	}
+
 	for (size_t i = 0; i < systems.size(); i++) {
 		if (systems[i]->enabled) {
 			systems[i]->PreUpdate();
