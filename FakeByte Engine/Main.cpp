@@ -4,13 +4,17 @@
 #include "SystemManager.h"
 #include "System.h"
 #include "FakeByteEngine.h"
+#include "Types.h"
 
 #include "Timer.h"
 #include "RenderSystem.h"
 #include "PlayerMovementSystem.h"
 #include "MoverSystem.h"
+#include "LinearAllocator.h"
+#include "MemoryManager.h"
 
 int main() {
+#if 0
 	{
 		Timer st("Main.cpp");
 
@@ -38,6 +42,18 @@ int main() {
 		FakeByteEngine::Initialize();
 		FakeByteEngine::Start();
 	}
+#endif
+	
+	MemoryManager::Initialize();
+	int* c;
+	for (int i = 0; i < 100; i++) {
+		c = (int*)(*MemoryManager::GetAllocator()).Allocate(sizeof(int));
+		*c = 69;
+	}
+
+	std::cout << sizeof(void*) << std::endl;
+
 	system("pause");
 	return 0;
 }
+

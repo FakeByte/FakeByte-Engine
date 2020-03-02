@@ -27,10 +27,40 @@
 
 #pragma once
 
-/**
- * Defines the size of the signatures Systems and Components use.
- * It also limits the maximum amount of ComponentArrays we can create.
- * @hideinitializer 
- */
-#define MAX_COMPONENTS 1024
-#define MEMORY_CAPACITY 10240 //10 KB
+/* INCLUDES */
+#include <cassert>
+
+#include "Types.h"
+
+
+template <class T>
+class Allocator {
+public:
+	~Allocator() {
+		assert(allocationCount == 0 && usedMemory == 0 && "Memory Leak Detected");
+		if (parent == nullptr) {
+			_aligned_free(start);
+		}
+	}
+
+	void Allocate(size_t size) {
+		// Dispatch call to exact type 
+		static_cast<T*> (this)->Allocate();
+	}
+
+	void Free(void* p) {
+		// Dispatch call to exact type 
+		static_cast<T*> (this)->Free();
+	}
+
+	size_t GetUsedMemory() {
+		return usedMemory;
+	}
+
+protected:
+	void* start;
+	size_t size;
+	size_t usedMemory;
+	size_t allocationCount;
+	Allocator* parent = nullptr;
+};

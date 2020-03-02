@@ -4,7 +4,7 @@
 //TODO: Remove
 #include <iostream>
 
-SystemManager & SystemManager::GetInstance() {
+SystemManager& SystemManager::GetInstance() {
 	static SystemManager instance;
 	return instance;
 }

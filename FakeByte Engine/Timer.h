@@ -62,6 +62,7 @@ public:
 		return std::chrono::duration_cast<std::chrono::duration<double, std::ratio<1> >>
 			(std::chrono::high_resolution_clock::now() - startTimepoint).count();
 	}
+
 private:
 	std::string name;
 	std::chrono::time_point<std::chrono::high_resolution_clock> startTimepoint;
