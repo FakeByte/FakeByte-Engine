@@ -40,6 +40,7 @@
 
 #include "ComponentArray.h"	//Array to hold Components
 #include "SystemManager.h"	//Manages Systems
+#include "Timer.h"
 
 /**
  * Singleton Component Manager, manages Entities and Components as well as their relationships.

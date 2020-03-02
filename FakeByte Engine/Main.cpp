@@ -46,6 +46,7 @@ int main() {
 		FakeByteEngine::Start();
 		*/
 	}
+
 	system("pause");
 	return 0;
 }

@@ -36,9 +36,20 @@
  */
 class Timer {
 public:
-	Timer(std::string name) : name(name), startTimepoint(std::chrono::high_resolution_clock::now()) {}
+	Timer(std::string name) :
+		name(name),
+		startTimepoint(std::chrono::high_resolution_clock::now()) {
+		destructorOutput = true;
+	}
+	Timer(std::string name, bool destructorOutput) : 
+		name(name), 
+		destructorOutput(destructorOutput), 
+		startTimepoint(std::chrono::high_resolution_clock::now()) {}
+
 	~Timer() {
-		Stop();
+		if (destructorOutput) {
+			Stop();
+		}
 	}
 
 	void Stop() {
@@ -76,5 +87,6 @@ public:
 
 private:
 	std::string name;
+	bool destructorOutput;
 	std::chrono::time_point<std::chrono::high_resolution_clock> startTimepoint;
 };

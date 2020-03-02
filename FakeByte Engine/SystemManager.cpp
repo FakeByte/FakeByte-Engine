@@ -1,9 +1,6 @@
 #include "SystemManager.h"
 #include "System.h"
 
-//TODO: Remove
-#include <iostream>
-
 SystemManager & SystemManager::GetInstance() {
 	static SystemManager instance;
 	return instance;
@@ -42,10 +39,6 @@ void SystemManager::SortSystemsArrayImplementation() {
 				systems[j + 1] = temp;
 			}
 		}
-	}
-
-	for (int i = 0; i < systems.size(); i++) {
-		std::cout << systems[i]->GetPriority() << std::endl;
 	}
 }
 

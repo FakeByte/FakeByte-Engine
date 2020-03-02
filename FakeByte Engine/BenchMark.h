@@ -37,8 +37,6 @@ public:
 
 	static void BenchmarkTest();
 
-	static void BenchmarkString();
-
 private:
 	//Singleton
 	Benchmark() = default;
@@ -49,5 +47,4 @@ private:
 
 	void BenchmarkTestImplementation(long long amount);
 
-	void BenchmarkStringImplementation(std::string x, char searchTerm);
 };
