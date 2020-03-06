@@ -6,6 +6,7 @@
 #include <string>
 
 
+//Counter/index for benchmarking test
 void Benchmark::BenchmarkTest() {
 	for (int i = 100; i <= 1000000; ) {
 		GetInstance().BenchmarkTestImplementation(i);
@@ -13,11 +14,7 @@ void Benchmark::BenchmarkTest() {
 	}
 }
 
-/**
-		 * Integer Benchmark, creates and delete entities according to the inputted amount/index
-		 *
-		 * @param amount How many times you want to make a new entity and component.
-		 */
+
 void Benchmark::BenchmarkTestImplementation(long long amount) {
 	//File name the result will be stored in
 	std::string fileName = "benchmark-result.html";
@@ -52,7 +49,7 @@ void Benchmark::BenchmarkTestImplementation(long long amount) {
 
 	Timer t("BENCHMARKING", false);
 
-	//1: Make x number of entities
+	//BENCHMARK TEST 1: Iterates until the written amount and creates that much entities
 	for (int i = 0; i < amount; i++) {
 		ComponentManager::GetInstance().CreateEntity();
 	}
@@ -61,7 +58,7 @@ void Benchmark::BenchmarkTestImplementation(long long amount) {
 	outputFile << "<td>" << t.elapsedSeconds() << "</td>";
 
 
-	//2: Adding components to an entity
+	//2: Adding components to the entity according to the number of entities in the list
 
 	std::vector<entity> entities = ComponentManager::GetInstance().GetEntityVector();
 	t.reset();
@@ -74,7 +71,7 @@ void Benchmark::BenchmarkTestImplementation(long long amount) {
 
 
 	//Systems Test
-	IntBenchMarkSystem system1;
+	IntBenchmarkSystem system1;
 	system1.RequireComponent(typeid(int));
 	t.reset();
 	SystemManager::GetInstance().Step();
@@ -82,7 +79,7 @@ void Benchmark::BenchmarkTestImplementation(long long amount) {
 
 
 
-	//3: Time to destroy x entities with component
+	//3: Time it takes to destroy the entities with components
 	t.reset();
 	SystemManager::GetInstance().Step();
 	for(int i=0;i < entities.size();i++){ 

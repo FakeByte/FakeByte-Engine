@@ -4,7 +4,8 @@
 #include "ComponentManager.h"
 #include "Timer.h"
 
-class IntBenchMarkSystem : public System {
+//BenchmarkSystem for benchmarking using integers
+class IntBenchmarkSystem : public System {
 	void PreUpdate() {}
 
 	void Update() {
@@ -16,7 +17,7 @@ class IntBenchMarkSystem : public System {
 	void PostUpdate() {}
 };
 
-class StringBenchMarkSystem : public System {
+class StringBenchmarkSystem : public System {
 	void PreUpdate() {}
 
 	void Update() {
@@ -34,6 +35,11 @@ public:
 		static Benchmark instance;
 		return instance;
 	}
+
+	/**
+	*Creates 1 million entities and components recursively and deletes them
+	*Displays running time in nanoseconds for each process
+	*/
 
 	static void BenchmarkTest();
 
