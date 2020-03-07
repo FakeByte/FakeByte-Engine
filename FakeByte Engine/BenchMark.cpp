@@ -3,10 +3,8 @@
 #include <fstream>
 #include <iostream>
 
-#include <string>
 
 
-//Counter/index for benchmarking test
 void Benchmark::BenchmarkTest() {
 	for (int i = 100; i <= 1000000; ) {
 		GetInstance().BenchmarkTestImplementation(i);
