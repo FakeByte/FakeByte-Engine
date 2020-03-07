@@ -26,62 +26,52 @@
  */
 
 #pragma once
-
-/* INCLUDES */
-#include <vector>
-
+#include "SystemManager.h"
 #include "System.h"
+#include "ComponentManager.h"
+#include "Timer.h"
 
-/* FORWARD DECLARATIONS */
-class System;
-enum SystemPriority;
+//BenchmarkSystem for benchmarking using integers
+class IntBenchmarkSystem : public System {
+	void PreUpdate() {}
 
-/**
- * The System Manager manages all systems and calls their update functions
- */
-class SystemManager {
+	void Update() {
+		for (size_t i = 0; i < compatibleEntities.size(); i++) {
+			ComponentManager::GetInstance().GetComponent<int>(compatibleEntities[i]);
+		}
+	}
+
+	void PostUpdate() {}
+};
+
+class Benchmark {
 public:
 	/**
-	 * Returns a singleton instance
-	 *
-	 * @returns Singleton Instance
-	 */
-	static SystemManager& GetInstance();
-	
+	* Returns a singleton instance
+	* @returns Singleton Instance
+	*/
+	static Benchmark& GetInstance() {
+		static Benchmark instance;
+		return instance;
+	}
+
 	/**
-	 * Registers a System with the SystemManager
-	 *
-	 * @param &system The system we want to add
-	 */
-	static void RegisterSystem(System &system);
-	/**
-	 * Sorts the systems array from high priority to low priority
-	 */
-	static void SortSystemsArray();
-	/**
-	 * Starts the next simulation Step
-	 */
-	static void Step();
-	/**
-	 * Calls the FindCompatibleEntities methods in every system
-	 */
-	static void FindCompatibleEntities();
+	* Recursively the benchmarking implementation by 100, 1000, 10000, 100000, 10000000
+	* Stores the results in a .html file that can be found in the engine folder
+	*/
+	static void BenchmarkTest();
 
 private:
-	//Singleton--
-	SystemManager() = default;
-	~SystemManager() = default;
-	SystemManager(const SystemManager&) = delete;
-	SystemManager& operator=(const SystemManager&) = delete;
-	//Singleton--
+	//Singleton
+	Benchmark() = default;
+	~Benchmark() = default;
+	Benchmark(const Benchmark&) = delete;
+	Benchmark& operator=(const Benchmark&) = delete;
+	//Singleton
 
-	std::vector<System*> systems;						//Vector of all registered systems
+	/**
+	*Implementation of 
+	*/
+	void BenchmarkTestImplementation(long long amount);
 
-	bool updateCompatibleEntities = true;
-
-	//Implementation methods
-	void RegisterSystemImplementation(System &system);	
-	void SortSystemsArrayImplementation();
-	void StepImplementation();
-	void FindCompatibleEntitiesImplementation();
 };

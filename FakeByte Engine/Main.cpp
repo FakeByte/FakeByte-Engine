@@ -4,6 +4,7 @@
 #include "SystemManager.h"
 #include "System.h"
 #include "FakeByteEngine.h"
+#include "Benchmark.h"
 
 #include "Timer.h"
 #include "RenderSystem.h"
@@ -12,7 +13,7 @@
 
 int main() {
 	{
-		Timer st("Main.cpp");
+		/*Timer st("Main.cpp");
 
 		RenderComponent r1;
 		PlayerComponent p;
@@ -33,11 +34,19 @@ int main() {
 		m.RequireComponent(r1.getType());
 
 		MoverSystem m2;
-		m2.RequireComponent(p.getType());
+		m2.RequireComponent(p.getType());*/
 
-		FakeByteEngine::Initialize();
+		//IntBenchMarkSystem bm1;
+
+		Benchmark::BenchmarkTest();
+
+		//Benchmark::BenchmarkString();
+
+		/*FakeByteEngine::Initialize();
 		FakeByteEngine::Start();
+		*/
 	}
+
 	system("pause");
 	return 0;
 }

@@ -18,7 +18,6 @@ void System::SetPriority(SystemPriority priority) {
 }
 
 void System::FindCompatibleEntities() {
-	std::cout << "Findind Compatible Entities" << std::endl;
 	compatibleEntities.clear();
 	
 	std::vector<entity> entities = ComponentManager::GetInstance().GetEntityVector();

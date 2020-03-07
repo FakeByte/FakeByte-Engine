@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Benchmark.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="ComponentArray.h" />
     <ClInclude Include="ComponentManager.h" />
@@ -35,6 +36,7 @@
     <ClInclude Include="Types\EntityId.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Benchmark.cpp" />
     <ClCompile Include="FakeByteEngine.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="System.cpp" />
