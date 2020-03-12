@@ -26,10 +26,11 @@
  */
 
 #pragma once
-#include "SystemManager.h"
-#include "System.h"
-#include "ComponentManager.h"
-#include "Timer.h"
+
+#include "ECS\Core\SystemManager.h"
+#include "ECS\Core\System.h"
+#include "ECS\Core\ComponentManager.h"
+#include "Time\Timer.h"
 
 //BenchmarkSystem for benchmarking using integers
 class IntBenchmarkSystem : public System {

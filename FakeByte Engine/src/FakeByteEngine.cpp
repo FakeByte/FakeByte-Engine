@@ -1,6 +1,6 @@
 #include "FakeByteEngine.h"
-#include "SystemManager.h"
-#include "Timer.h"
+#include "ECS\Core\SystemManager.h"
+#include "Time\Timer.h"
 
 void FakeByteEngine::Initialize() {
 	GetInstance().InitializeImplementation();

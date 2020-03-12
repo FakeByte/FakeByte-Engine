@@ -1,7 +1,7 @@
 #pragma once
 
-#include "System.h"
-#include "ComponentManager.h"
+#include "ECS\Core\System.h"
+#include "ECS\Core\ComponentManager.h"
 #include "RenderComponent.h"
 
 class RenderSystem : public System {

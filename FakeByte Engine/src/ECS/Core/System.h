@@ -32,8 +32,8 @@
 #include <bitset>			//Bitset is used for signatures
 #include <typeindex>		//A wrapper around typeinfo
 
-#include "Types/Constants.h"//Defines various constants
-#include "Types/EntityId.h"	//Defines the type entity
+#include "ECS\Constants\Constants.h"//Defines various constants
+#include "ECS\Types\EntityId.h"	//Defines the type entity
 
 /* FORWARD DECLARATIONS */
 class SystemManager;

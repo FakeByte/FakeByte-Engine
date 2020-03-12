@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Component.h"
+#include "ECS\Core\Component.h"
 #include <string>
 
 struct RenderComponent : Component {

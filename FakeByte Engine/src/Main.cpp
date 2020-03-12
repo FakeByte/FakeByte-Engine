@@ -1,15 +1,15 @@
 #include <stdlib.h>
-#include "ComponentManager.h"
-#include "Types/EntityId.h"
-#include "SystemManager.h"
-#include "System.h"
+#include "ECS\Core\ComponentManager.h"
+#include "ECS\Types\EntityId.h"
+#include "ECS\Core\SystemManager.h"
+#include "ECS\Core\System.h"
 #include "FakeByteEngine.h"
-#include "Benchmark.h"
+#include "Benchmark\Benchmark.h"
 
-#include "Timer.h"
-#include "RenderSystem.h"
-#include "PlayerMovementSystem.h"
-#include "MoverSystem.h"
+#include "Time\Timer.h"
+#include "examples\console-animation\RenderSystem.h"
+#include "examples\console-animation\PlayerMovementSystem.h"
+#include "examples\console-animation\MoverSystem.h"
 
 int main() {
 	{
