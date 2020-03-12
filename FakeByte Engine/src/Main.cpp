@@ -1,23 +1,27 @@
 #include <stdlib.h>
-#include "ComponentManager.h"
-#include "Types/EntityId.h"
-#include "SystemManager.h"
-#include "System.h"
+#include "ECS\Core\ComponentManager.h"
+#include "ECS\Types\EntityId.h"
+#include "ECS\Core\SystemManager.h"
+#include "ECS\Core\System.h"
 #include "FakeByteEngine.h"
-#include "Types.h"
 
-#include "Timer.h"
-#include "RenderSystem.h"
-#include "PlayerMovementSystem.h"
-#include "MoverSystem.h"
+#include "Types.h"
 #include "LinearAllocator.h"
 #include "MemoryManager.h"
 #include <cassert>
 
+#include "Benchmark\Benchmark.h"
+
+#include "Time\Timer.h"
+#include "examples\console-animation\RenderSystem.h"
+#include "examples\console-animation\PlayerMovementSystem.h"
+#include "examples\console-animation\MoverSystem.h"
+
+
 int main() {
 #if 0
 	{
-		Timer st("Main.cpp");
+		/*Timer st("Main.cpp");
 
 		RenderComponent r1;
 		PlayerComponent p;
@@ -38,11 +42,19 @@ int main() {
 		m.RequireComponent(r1.getType());
 
 		MoverSystem m2;
-		m2.RequireComponent(p.getType());
+		m2.RequireComponent(p.getType());*/
 
-		FakeByteEngine::Initialize();
+		//IntBenchMarkSystem bm1;
+
+		Benchmark::BenchmarkTest();
+
+		//Benchmark::BenchmarkString();
+
+		/*FakeByteEngine::Initialize();
 		FakeByteEngine::Start();
+		*/
 	}
+
 #endif
 	int test = 69;
 	MemoryManager::Initialize();
@@ -58,6 +70,7 @@ int main() {
 	std::cout <<  std::endl;
 
 	std::cout << *static_cast<int *>(MemoryManager::GetAllocator()->start) << std::endl;
+
 
 	system("pause");
 	return 0;

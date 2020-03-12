@@ -35,11 +35,12 @@
 #include <typeinfo>			//used for typeid()
 #include <typeindex>		//A wrapper around typeinfo
 
-#include "Types/EntityId.h"	//Defines the type entity
-#include "Types/Constants.h"//Defines various constants
+#include "ECS\Types\EntityId.h"	//Defines the type entity
+#include "ECS\Constants\Constants.h"//Defines various constants
 
-#include "ComponentArray.h"	//Array to hold Components
-#include "SystemManager.h"	//Manages Systems
+#include "ECS\Core\ComponentArray.h"	//Array to hold Components
+#include "ECS\Core\SystemManager.h"	//Manages Systems
+#include "Time\Timer.h"
 
 /**
  * Singleton Component Manager, manages Entities and Components as well as their relationships.

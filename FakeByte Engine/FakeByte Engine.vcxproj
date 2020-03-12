@@ -19,34 +19,28 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Allocator.h" />
-    <ClInclude Include="Component.h" />
-    <ClInclude Include="ComponentArray.h" />
-    <ClInclude Include="ComponentManager.h" />
-    <ClInclude Include="FakeByteEngine.h" />
-    <ClInclude Include="LinearAllocator.h" />
-    <ClInclude Include="MemoryManager.h" />
-    <ClInclude Include="MoverSystem.h" />
-    <ClInclude Include="PlayerComponent.h" />
-    <ClInclude Include="PlayerMovementSystem.h" />
-    <ClInclude Include="RenderComponent.h" />
-    <ClInclude Include="RenderSystem.h" />
-    <ClInclude Include="StackAllocator.h" />
-    <ClInclude Include="System.h" />
-    <ClInclude Include="SystemManager.h" />
-    <ClInclude Include="Timer.h" />
-    <ClInclude Include="Types.h" />
-    <ClInclude Include="Types\Constants.h" />
-    <ClInclude Include="Types\EntityId.h" />
+    <ClInclude Include="src\Benchmark\Benchmark.h" />
+    <ClInclude Include="src\ECS\Core\Component.h" />
+    <ClInclude Include="src\ECS\Core\ComponentArray.h" />
+    <ClInclude Include="src\ECS\Core\ComponentManager.h" />
+    <ClInclude Include="src\FakeByteEngine.h" />
+    <ClInclude Include="examples\console-animation\MoverSystem.h" />
+    <ClInclude Include="examples\console-animation\PlayerComponent.h" />
+    <ClInclude Include="examples\console-animation\PlayerMovementSystem.h" />
+    <ClInclude Include="examples\console-animation\RenderComponent.h" />
+    <ClInclude Include="examples\console-animation\RenderSystem.h" />
+    <ClInclude Include="src\ECS\Core\System.h" />
+    <ClInclude Include="src\ECS\Core\SystemManager.h" />
+    <ClInclude Include="src\Time\Timer.h" />
+    <ClInclude Include="src\ECS\constants\Constants.h" />
+    <ClInclude Include="src\ECS\types\EntityId.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="FakeByteEngine.cpp" />
-    <ClCompile Include="LinearAllocator.cpp" />
-    <ClCompile Include="Main.cpp" />
-    <ClCompile Include="MemoryManager.cpp" />
-    <ClCompile Include="StackAllocator.cpp" />
-    <ClCompile Include="System.cpp" />
-    <ClCompile Include="SystemManager.cpp" />
+    <ClCompile Include="src\Benchmark\Benchmark.cpp" />
+    <ClCompile Include="src\FakeByteEngine.cpp" />
+    <ClCompile Include="src\Main.cpp" />
+    <ClCompile Include="src\ECS\Core\System.cpp" />
+    <ClCompile Include="src\ECS\Core\SystemManager.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
@@ -99,7 +93,26 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)bin\intermediates\$(Platform)\$(Configuration)\</IntDir>
+    <IncludePath>$(ProjectDir)\src;$(VC_IncludePath);$(WindowsSDK_IncludePath);$(SolutionDir);$(ProjectDir)</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)bin\intermediates\$(Platform)\$(Configuration)\</IntDir>
+    <IncludePath>$(ProjectDir)\src;$(VC_IncludePath);$(WindowsSDK_IncludePath);$(SolutionDir);$(ProjectDir)</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)bin\intermediates\$(Platform)\$(Configuration)\</IntDir>
+    <IncludePath>$(ProjectDir)\src;$(VC_IncludePath);$(WindowsSDK_IncludePath);$(SolutionDir);$(ProjectDir)</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)bin\intermediates\$(Platform)\$(Configuration)\</IntDir>
+    <IncludePath>$(ProjectDir)\src;$(VC_IncludePath);$(WindowsSDK_IncludePath);$(SolutionDir);$(ProjectDir)</IncludePath>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>

@@ -36,9 +36,20 @@
  */
 class Timer {
 public:
-	Timer(std::string name) : name(name), startTimepoint(std::chrono::high_resolution_clock::now()) {}
+	Timer(std::string name) :
+		name(name),
+		startTimepoint(std::chrono::high_resolution_clock::now()) {
+		destructorOutput = true;
+	}
+	Timer(std::string name, bool destructorOutput) : 
+		name(name), 
+		destructorOutput(destructorOutput), 
+		startTimepoint(std::chrono::high_resolution_clock::now()) {}
+
 	~Timer() {
-		Stop();
+		if (destructorOutput) {
+			Stop();
+		}
 	}
 
 	void Stop() {
@@ -63,7 +74,19 @@ public:
 			(std::chrono::high_resolution_clock::now() - startTimepoint).count();
 	}
 
+	long long elapsedNanoseconds() const {
+		auto endTimepoint = std::chrono::high_resolution_clock::now();
+
+		auto start = std::chrono::time_point_cast<std::chrono::nanoseconds>(startTimepoint).time_since_epoch().count();
+		auto end = std::chrono::time_point_cast<std::chrono::nanoseconds>(endTimepoint).time_since_epoch().count();
+
+		long long nanoseconds = end - start;
+
+		return nanoseconds;
+	}
+
 private:
 	std::string name;
+	bool destructorOutput;
 	std::chrono::time_point<std::chrono::high_resolution_clock> startTimepoint;
 };

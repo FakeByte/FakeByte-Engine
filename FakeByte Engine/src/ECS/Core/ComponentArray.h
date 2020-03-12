@@ -34,7 +34,7 @@
 #include <typeinfo>		//used for typeid()
 #include <typeindex>	//A wrapper around typeinfo
 
-#include "Types/EntityId.h"	//Defines the type entity
+#include "ECS\Types\EntityId.h"	//Defines the type entity
 
 /**
  * Component Array Interface.
