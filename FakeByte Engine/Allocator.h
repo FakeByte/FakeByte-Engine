@@ -29,6 +29,7 @@
 
 /* INCLUDES */
 #include <cassert>
+#include <malloc.h>
 
 #include "Types.h"
 
@@ -57,10 +58,13 @@ public:
 		return usedMemory;
 	}
 
-protected:
+	//Make private
 	void* start;
 	size_t size;
-	size_t usedMemory;
-	size_t allocationCount;
+	size_t usedMemory = 0;
+	size_t allocationCount = 0;
 	Allocator* parent = nullptr;
+protected:
+	
+
 };

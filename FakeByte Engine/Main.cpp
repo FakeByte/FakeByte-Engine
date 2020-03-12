@@ -12,6 +12,7 @@
 #include "MoverSystem.h"
 #include "LinearAllocator.h"
 #include "MemoryManager.h"
+#include <cassert>
 
 int main() {
 #if 0
@@ -43,15 +44,20 @@ int main() {
 		FakeByteEngine::Start();
 	}
 #endif
-	
+	int test = 69;
 	MemoryManager::Initialize();
-	int* c;
-	for (int i = 0; i < 100; i++) {
-		c = (int*)(*MemoryManager::GetAllocator()).Allocate(sizeof(int));
-		*c = 69;
-	}
+	void* c;
 
-	std::cout << sizeof(void*) << std::endl;
+	c = (void*)(*MemoryManager::GetAllocator()).Allocate(sizeof(void*));
+
+	std::cout << "Start: " << MemoryManager::GetAllocator()->start << std::endl;
+	std::cout << c << std::endl;
+	//std::cout << *c << std::endl;
+	std::cout << &c << std::endl;
+
+	std::cout <<  std::endl;
+
+	std::cout << *static_cast<int *>(MemoryManager::GetAllocator()->start) << std::endl;
 
 	system("pause");
 	return 0;
