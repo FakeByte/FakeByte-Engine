@@ -31,7 +31,7 @@
 #include <cassert>
 #include <malloc.h>
 
-#include "Types.h"
+#include "ECS\Types\Types.h"
 
 
 template <class T>

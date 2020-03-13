@@ -5,7 +5,7 @@
 #include <iostream>
 
 #include "MemoryManager.h"
-#include "Types/Constants.h"
+#include "ECS\Constants\Constants.h"
 
 MemoryManager& MemoryManager::GetInstance() {
 	static MemoryManager instance;

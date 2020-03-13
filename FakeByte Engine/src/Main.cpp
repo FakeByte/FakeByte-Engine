@@ -5,9 +5,9 @@
 #include "ECS\Core\System.h"
 #include "FakeByteEngine.h"
 
-#include "Types.h"
-#include "LinearAllocator.h"
-#include "MemoryManager.h"
+#include "ECS\Types\Types.h"
+#include "ECS\Memory\LinearAllocator.h"
+#include "ECS\Memory\MemoryManager.h"
 #include <cassert>
 
 #include "Benchmark\Benchmark.h"
@@ -55,7 +55,7 @@ int main() {
 		*/
 	}
 
-#endif
+
 	int test = 69;
 	MemoryManager::Initialize();
 	void* c;
@@ -70,7 +70,14 @@ int main() {
 	std::cout <<  std::endl;
 
 	std::cout << *static_cast<int *>(MemoryManager::GetAllocator()->start) << std::endl;
+#endif
+	void* v = malloc(8);
+	*static_cast<u64 *>(v) = 1;
 
+#if _DEBUG
+	std::cout << *static_cast<u64 *>(v) << std::endl;
+#endif
+	assert(true == false);
 
 	system("pause");
 	return 0;
