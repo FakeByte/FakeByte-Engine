@@ -1,5 +1,9 @@
 #include "SystemManager.h"
 #include "System.h"
+#include "Sorting\MergeSort.h"
+#include <vector>
+
+#include <iostream>
 
 SystemManager & SystemManager::GetInstance() {
 	static SystemManager instance;
@@ -22,6 +26,7 @@ void SystemManager::FindCompatibleEntities() {
 	GetInstance().updateCompatibleEntities = true;
 }
 
+
 void SystemManager::RegisterSystemImplementation(System & system) {
 	System* s = &system;
 	systems.push_back(&system);
@@ -29,17 +34,13 @@ void SystemManager::RegisterSystemImplementation(System & system) {
 }
 
 void SystemManager::SortSystemsArrayImplementation() {
-	//Bubblesort #Slow #FutureMeChangeThis
-	for (int i = 0; i < systems.size() - 1; i++){
-		// Last i elements are already in place  
-		for (int j = 0; j < (systems.size() - i - 1); j++) {
-			if (systems[j]->GetPriority() < systems[j + 1]->GetPriority()) {
-				System* temp = systems[j];
-				systems[j] = systems[j + 1];
-				systems[j + 1] = temp;
-			}
-		}
+
+	systems = Sorting::MergeSort(systems);
+	
+	for (int i = 0; i < systems.size(); i++) {
+		std::cout << systems[i]->GetPriority() << std::endl;
 	}
+	std::cout << std::endl;
 }
 
 void SystemManager::StepImplementation() {

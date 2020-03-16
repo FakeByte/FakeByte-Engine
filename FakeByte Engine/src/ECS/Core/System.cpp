@@ -8,7 +8,7 @@ System::System() {
 }
 
 void System::RequireComponent(std::type_index componentType) {
-	signature[ComponentManager::GetInstance().GetComponentIndex(componentType)] = true;
+	signature[ComponentManager::GetComponentIndex(componentType)] = true;
 	FindCompatibleEntities();
 }
 
@@ -22,8 +22,24 @@ void System::FindCompatibleEntities() {
 	
 	std::vector<entity> entities = ComponentManager::GetInstance().GetEntityVector();
 	for (size_t i = 0; i < entities.size(); i++) {
-		if ((ComponentManager::GetInstance().GetSignature(entities[i]) & signature) == signature) {
+		if ((ComponentManager::GetSignature(entities[i]) & signature) == signature) {
 			compatibleEntities.push_back(entities[i]);
 		}
 	}
+}
+
+bool operator > (System &s1, System &s2) {
+	return s1.GetPriority() > s2.GetPriority();
+}
+
+bool operator >= (System &s1, System &s2) {
+	return s1.GetPriority() >= s2.GetPriority();
+}
+
+bool operator < (System &s1, System &s2) {
+	return s1.GetPriority() < s2.GetPriority();
+}
+
+bool operator <= (System &s1, System &s2) {
+	return s1.GetPriority() <= s2.GetPriority();
 }

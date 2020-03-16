@@ -62,6 +62,7 @@ public:
 	 * Starts the next simulation Step
 	 */
 	static void Step();
+
 	/**
 	 * Calls the FindCompatibleEntities methods in every system
 	 */

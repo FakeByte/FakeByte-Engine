@@ -57,6 +57,12 @@ enum SystemPriority {
  */
 class System {
 public:
+	friend bool operator > (System &s1, System &s2);
+	friend bool operator <= (System &s1, System &s2);
+
+	friend bool operator < (System &s1, System &s2);
+	friend bool operator >= (System &s1, System &s2);
+
 	/**
 	 * The constructor will register the system with the SystemManager
 	 */
@@ -109,3 +115,8 @@ protected:
 	std::vector<entity> compatibleEntities;				//Vector of compatible entities
 	std::bitset<MAX_COMPONENTS> signature;				//Systems signature
 };
+
+bool operator < (System &s1, System&s2);
+bool operator > (System &s1, System &s2);
+bool operator <= (System &s1, System &s2);
+bool operator >= (System &s1, System &s2);
