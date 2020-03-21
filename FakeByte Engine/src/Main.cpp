@@ -4,14 +4,43 @@
 #include "ECS\Core\SystemManager.h"
 #include "ECS\Core\System.h"
 #include "FakeByteEngine.h"
+
+#include "ECS\Types\Types.h"
+#include "ECS\Memory\LinearAllocator.h"
+#include "ECS\Memory\StackAllocator.h"
+#include "ECS\Memory\MemoryManager.h"
+#include <cassert>
+
 #include "Benchmark\Benchmark.h"
 
 #include "Time\Timer.h"
 #include "examples\console-animation\RenderSystem.h"
 #include "examples\console-animation\PlayerMovementSystem.h"
 #include "examples\console-animation\MoverSystem.h"
+#include <string.h>
+
+#include "Debug/Instrumentor.h"
+
+void Test2() {
+	PROFILE_FUNCTION();
+	for (int i = 0; i < 1000; i++) {
+		i = i * 2;
+	}
+}
+
+void Test() {
+	PROFILE_FUNCTION();
+	for (int i = 0; i < 100; i++) {
+		Test2();
+	}
+}
+
 
 int main() {
+	PROFILE_START_SESSION(test, test.json);
+//for(int i = 0; i < 23000; i++)
+	Test2();
+#if 0
 	{
 		/*Timer st("Main.cpp");
 
@@ -55,6 +84,32 @@ int main() {
 		*/
 	}
 
+
+	int test = 69;
+	MemoryManager::Initialize();
+	void* c;
+
+	c = (void*)(*MemoryManager::GetAllocator()).Allocate(sizeof(void*));
+
+
+	void* v = malloc(100);
+	StackAllocator* sa = new StackAllocator((*MemoryManager::GetAllocator()).Allocate(1000), 1000, MemoryManager::GetAllocator());
+
+	int* i = static_cast<int*>(sa->Allocate(sizeof(int)));
+	*i = 69;
+
+	std::cout << *i << std::endl;
+	sa->Free(i);
+	int* i2 = static_cast<int*>(sa->Allocate(sizeof(int)));
+	*i2 = 42;
+	std::cout << *i << std::endl;
+	sa->Free(i2);
+	delete sa;
+#endif
+
+	PROFILE_END_SESSION();
+	Instrumentor::OpenTraceFile("test.json");
 	system("pause");
+
 	return 0;
 }

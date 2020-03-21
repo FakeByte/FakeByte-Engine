@@ -25,12 +25,40 @@
  * along with this program.  If not, see <https://opensource.org/licenses/MIT>.
  */
 
+
 #pragma once
 
-/**
- * Defines the size of the signatures Systems and Components use.
- * It also limits the maximum amount of ComponentArrays we can create.
- * @hideinitializer 
- */
-#define MAX_COMPONENTS 1024
-#define MEMORY_CAPACITY 10240 //10 KB
+/* INCLUDES */
+#include "LinearAllocator.h"
+
+class MemoryManager {
+public:
+	/**
+	 * Returns a singleton instance
+	 *
+	 * @returns Singleton Instance
+	 */
+	static MemoryManager& GetInstance();
+
+	/**
+	 * Allocates global memory for all custom allocators
+	 */
+	static void Initialize();
+
+	static LinearAllocator* GetAllocator();
+
+private:
+	//Singleton--
+	MemoryManager() = default;
+	~MemoryManager();
+	MemoryManager(const MemoryManager&) = delete;
+	MemoryManager& operator=(const MemoryManager&) = delete;
+	//Singleton--
+
+	//Implementations
+	void InitializeImplementation();
+
+	void* memory;
+
+	LinearAllocator* globalAllocator;
+};

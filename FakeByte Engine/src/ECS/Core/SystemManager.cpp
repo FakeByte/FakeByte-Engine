@@ -5,7 +5,10 @@
 
 #include <iostream>
 
-SystemManager & SystemManager::GetInstance() {
+//TODO: Remove
+#include <iostream>
+
+SystemManager& SystemManager::GetInstance() {
 	static SystemManager instance;
 	return instance;
 }

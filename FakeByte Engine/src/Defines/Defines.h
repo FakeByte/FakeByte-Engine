@@ -25,12 +25,9 @@
  * along with this program.  If not, see <https://opensource.org/licenses/MIT>.
  */
 
-#pragma once
+///Note: No include guard, only use this header for preprocessor defines
 
-/**
- * Defines the size of the signatures Systems and Components use.
- * It also limits the maximum amount of ComponentArrays we can create.
- * @hideinitializer 
- */
-#define MAX_COMPONENTS 1024
-#define MEMORY_CAPACITY 10240 //10 KB
+#ifdef _DEBUG
+	#define MEMORY_LEAK_DETECTION
+	#define PROFILING
+#endif // _DEBUG

@@ -27,10 +27,18 @@
 
 #pragma once
 
-/**
- * Defines the size of the signatures Systems and Components use.
- * It also limits the maximum amount of ComponentArrays we can create.
- * @hideinitializer 
- */
-#define MAX_COMPONENTS 1024
-#define MEMORY_CAPACITY 10240 //10 KB
+ /* INCLUDES */
+#include "Allocator.h"
+
+class StackAllocator : public Allocator<StackAllocator> {
+public:
+	StackAllocator(void* start, size_t memorySize, IAllocator* parent = nullptr);
+
+	void* Allocate(size_t size);
+	void Free(void* p);
+private:
+	void* nextFree;
+#ifdef MEMORY_LEAK_DETECTION 
+	void* prev_position;
+#endif //MEMORY_LEAK_DETECTION
+};

@@ -1,4 +1,4 @@
-#include "System.h"
+﻿#include "System.h"
 #include "SystemManager.h"
 #include "ComponentManager.h"
 #include <iostream>
@@ -19,7 +19,7 @@ void System::SetPriority(SystemPriority priority) {
 
 void System::FindCompatibleEntities() {
 	compatibleEntities.clear();
-	
+
 	std::vector<entity> entities = ComponentManager::GetInstance().GetEntityVector();
 	for (size_t i = 0; i < entities.size(); i++) {
 		if ((ComponentManager::GetSignature(entities[i]) & signature) == signature) {
