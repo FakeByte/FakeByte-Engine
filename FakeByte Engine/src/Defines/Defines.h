@@ -25,18 +25,9 @@
  * along with this program.  If not, see <https://opensource.org/licenses/MIT>.
  */
 
-#pragma once
+///Note: No include guard, only use this header for preprocessor defines
 
-/* INCLUDES */
-#include "Allocator.h"
-
-class LinearAllocator : public Allocator<LinearAllocator> {
-public:
-	LinearAllocator(void* start, size_t memorySize, Allocator* parent = nullptr);
-
-	void* Allocate(size_t size);
-	void Free(void* p);
-	void Clear();
-private:
-	void* nextFree;
-};
+#ifdef _DEBUG
+	#define MEMORY_LEAK_DETECTION
+	#define PROFILING
+#endif // _DEBUG

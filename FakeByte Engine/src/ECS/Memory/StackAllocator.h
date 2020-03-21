@@ -32,12 +32,13 @@
 
 class StackAllocator : public Allocator<StackAllocator> {
 public:
-	StackAllocator(void* start, size_t memorySize);
-	~StackAllocator();
+	StackAllocator(void* start, size_t memorySize, IAllocator* parent = nullptr);
 
 	void* Allocate(size_t size);
 	void Free(void* p);
-	void Clear();
 private:
 	void* nextFree;
+#ifdef MEMORY_LEAK_DETECTION 
+	void* prev_position;
+#endif //MEMORY_LEAK_DETECTION
 };

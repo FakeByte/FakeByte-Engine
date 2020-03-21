@@ -20,6 +20,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Benchmark\Benchmark.h" />
+    <ClInclude Include="src\Debug\ProfileResult.h" />
+    <ClInclude Include="src\Defines\Defines.h" />
     <ClInclude Include="src\ECS\Core\Component.h" />
     <ClInclude Include="src\ECS\Core\ComponentArray.h" />
     <ClInclude Include="src\ECS\Core\ComponentManager.h" />
@@ -36,12 +38,15 @@
     <ClInclude Include="examples\console-animation\RenderSystem.h" />
     <ClInclude Include="src\ECS\Core\System.h" />
     <ClInclude Include="src\ECS\Core\SystemManager.h" />
+    <ClInclude Include="src\Debug\InstrumentationTimer.h" />
+    <ClInclude Include="src\Debug\Instrumentor.h" />
     <ClInclude Include="src\Time\Timer.h" />
     <ClInclude Include="src\ECS\constants\Constants.h" />
     <ClInclude Include="src\ECS\types\EntityId.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Benchmark\Benchmark.cpp" />
+    <ClCompile Include="src\Debug\InstrumentationTimer.cpp" />
     <ClCompile Include="src\ECS\Memory\LinearAllocator.cpp" />
     <ClCompile Include="src\ECS\Memory\MemoryManager.cpp" />
     <ClCompile Include="src\ECS\Memory\StackAllocator.cpp" />
@@ -49,6 +54,7 @@
     <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="src\ECS\Core\System.cpp" />
     <ClCompile Include="src\ECS\Core\SystemManager.cpp" />
+    <ClCompile Include="src\Debug\Instrumentor.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
@@ -146,6 +152,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -160,6 +167,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>

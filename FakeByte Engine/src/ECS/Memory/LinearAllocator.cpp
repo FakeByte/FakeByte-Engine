@@ -1,8 +1,9 @@
 #include "LinearAllocator.h"
 
-LinearAllocator::LinearAllocator(void * start, size_t size) {
+LinearAllocator::LinearAllocator(void * start, size_t size, Allocator* parent) {
 	this->start = start;
 	this->size = size;
+	this->parent = parent;
 	nextFree = start;
 }
 

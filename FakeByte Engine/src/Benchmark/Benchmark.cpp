@@ -47,9 +47,9 @@ void Benchmark::BenchmarkTestImplementation(long long amount) {
 	bool fileExists = true;
 
 	//Check if the file exists
-	//Suppress Compiler warning 4996 | fopen is deprecated use fopen_s
-#pragma warning(suppress : 4996)
-	if (FILE *file = std::fopen(fileName.c_str(), "r")) {
+	FILE *file;
+	errno_t err;
+	if (err = fopen_s(&file, fileName.c_str(), "r") == 0) {
 		fclose(file);
 	} else {
 		fileExists = false;

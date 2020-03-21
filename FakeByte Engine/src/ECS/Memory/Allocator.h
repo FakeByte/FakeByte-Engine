@@ -32,15 +32,26 @@
 #include <malloc.h>
 
 #include "ECS\Types\Types.h"
+#include "Defines\Defines.h"
 
+class IAllocator {
+public:
+	virtual void Free(void* p) = 0;
+};
 
 template <class T>
-class Allocator {
+class Allocator : public IAllocator{
 public:
 	~Allocator() {
+
+#ifdef MEMORY_LEAK_DETECTION
 		assert(allocationCount == 0 && usedMemory == 0 && "Memory Leak Detected");
+#endif // MEMORY_LEAK_DETECTION
+
 		if (parent == nullptr) {
 			_aligned_free(start);
+		} else {
+			parent->Free(start);
 		}
 	}
 
@@ -49,22 +60,21 @@ public:
 		static_cast<T*> (this)->Allocate();
 	}
 
-	void Free(void* p) {
+	void Free(void* p) override{
 		// Dispatch call to exact type 
-		static_cast<T*> (this)->Free();
+		static_cast<T*> (this)->Free(p);
 	}
 
 	size_t GetUsedMemory() {
 		return usedMemory;
 	}
 
-	//Make private
+
+protected:
 	void* start;
 	size_t size;
 	size_t usedMemory = 0;
 	size_t allocationCount = 0;
-	Allocator* parent = nullptr;
-protected:
-	
+	IAllocator* parent = nullptr;
 
 };
