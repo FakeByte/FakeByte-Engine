@@ -66,8 +66,16 @@ int main() {
 		m2.RequireComponent(p.getType());*/
 
 		//IntBenchMarkSystem bm1;
+		RenderSystem r1;
+		r1.SetPriority(NORMAL_SYSTEM_PRIORITY);
+		RenderSystem r2;
+		r2.SetPriority(LOW_SYSTEM_PRIORITY);
+		RenderSystem r3;
+		r3.SetPriority(HIGHEST_SYSTEM_PRIORITY);
 
-		Benchmark::BenchmarkTest();
+		//SystemManager::SortSystemsArray();
+
+		//Benchmark::BenchmarkTest();
 
 		//Benchmark::BenchmarkString();
 

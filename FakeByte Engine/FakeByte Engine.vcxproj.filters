@@ -94,6 +94,7 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Debug\ProfileResult.h">
+    <ClInclude Include="src\Sorting\MergeSort.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

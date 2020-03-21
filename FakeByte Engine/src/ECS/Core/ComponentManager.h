@@ -57,6 +57,9 @@ class ComponentManager {
 			return instance;
 		}
 
+
+		//Functions
+
 		/**
 		 * Created an entity with zero or more Components
 		 *
@@ -64,11 +67,130 @@ class ComponentManager {
 		 * @returns entity The newly created entity
 		 */
 		template<typename... Components>
-		entity CreateEntity(Components const&... components) {
+		static void CreateEntity(Components const&... components) {
+			if constexpr (sizeof...(components) > 0) {
+				ComponentManager::GetInstance().CreateEntityImplementation(components...);
+			}
+			else {
+				ComponentManager::GetInstance().CreateEntityImplementation();
+			}
+		}
+
+		/**
+		 * Destroys an entity and its components
+		 *
+		 * @param id Entity ID that will be destroyed
+		 */
+		static void DestroyEntity(entity id) {
+			ComponentManager::GetInstance().DestroyEntityImplementation(id);
+		}
+		
+		/**
+		 * Adds a component to an entity. When multiple components are specified the functions calls itself recursively
+		 * until all components are added to the entity.
+		 *
+		 * @param id The ID of the entity that we add components to
+		 * @tparam first The component we add
+		 * @tparam rest The components we will add recursively
+		 */
+		template<typename Component, typename... Components>
+		static void AddComponent(entity id, Component const& first, Components const&... rest) {
+			if constexpr (sizeof...(rest) > 0) {
+				ComponentManager::GetInstance().AddComponentImplementation(id, first, rest...);
+			}
+			else {
+				ComponentManager::GetInstance().AddComponentImplementation(id, first);
+			}
+		}
+
+		/**
+		 * Removes a component from an entity. When multiple components are specified the functions calls itself recursively
+		 * until all components are removed from the entity.
+		 *
+		 * @param id The ID of the entity that we remove components from
+		 * @tparam first The component we remove
+		 * @tparam rest The components we will remove recursively
+		 * @throws Throws if this component type does not have a component array.
+		 * @note Only throws in Debug mode.
+		 */
+		template<typename Component, typename... Components>
+		static void RemoveComponent(entity id, Component const& first, Components const&... rest) {
+			if constexpr (sizeof...(rest) > 0) {
+				ComponentManager::GetInstance().RemoveComponentImplementation(id, first, rest...);
+			}
+			else {
+				ComponentManager::GetInstance().RemoveComponentImplementation(id, first);
+			}
+		}
+
+
+		/**
+		 * Returns a component of type T from the specified entity
+		 *
+		 * @param entityID The ID of the entity who we will return the component from.
+		 * @tparam T The type of component we want to return
+		 * @returns Component of type T from the specified entity
+		 */
+		template<typename T>
+		static T& GetComponent(entity entityID) {
+			return ComponentManager::GetInstance().GetComponentImplementation<T>(entityID);
+		}
+
+
+		/**
+		 * Returns the index of a component for the componentArrays vector
+		 *
+		 * @param componentType The type of the component whose index we want
+		 * @returns size_t Index into componentArrays
+		 */
+		static size_t GetComponentIndex(std::type_index componentType) {
+			return ComponentManager::GetInstance().GetComponentIndexImplementation(componentType);
+		}
+
+
+		/**
+		 * Returns an entity's signature
+		 *
+		 * @param entityID ID of the entity whose signature we want
+		 * @returns std::bitset<MAX_COMPONENTS> The entity's signature
+		 */
+		static std::bitset<MAX_COMPONENTS> GetSignature(entity entityID) {
+			return ComponentManager::GetInstance().GetSignatureImplementation(entityID);
+		}
+
+		/**
+		 * Returns the Vector containing all entity ID's
+		 *
+		 * @returns std::vector<entity> The vector containing all entity ID's
+		 */
+		static std::vector<entity> GetEntityVector() {
+			return ComponentManager::GetInstance().GetEntityVectorImplementation();
+		}
+private:
+
+		//Singleton--
+		ComponentManager() = default;
+		~ComponentManager() = default;
+		ComponentManager(const ComponentManager&) = delete;
+		ComponentManager& operator=(const ComponentManager&) = delete;
+		//Singleton--
+
+		unsigned int entityCount = 0;										//Current existing entities
+		std::vector<entity> unusedEntityIdentifiers; 						//List of not existing Entities
+		std::vector<entity> entityIdentifiers; 								//List of existing Entities
+		std::unordered_map<entity, std::bitset<MAX_COMPONENTS>> signatures; //Entity Signatures
+		std::unordered_map<std::type_index, size_t> componentTypeToIndexMap;//Map from Component Type to Index in componentArrays
+		std::vector<std::unique_ptr<IComponentArray>> componentArrays; 		//List of Component Arrays
+
+		//Implementations
+
+		template<typename... Components>
+		entity CreateEntityImplementation(Components const&... components) {
 			entity id;
 			if (unusedEntityIdentifiers.empty()) {	//If no unused ID is available assaign the entityCount as ID 
 				id = entityCount++;
-			} else {								//Else assaign an unused ID
+			}
+			else {								//Else assaign an unused ID
 				id = unusedEntityIdentifiers.back();
 				unusedEntityIdentifiers.pop_back();
 			}
@@ -87,12 +209,8 @@ class ComponentManager {
 			return id;
 		}
 
-		/**
-		 * Destroys an entity and its components
-		 *
-		 * @param id Entity ID that will be destroyed
-		 */
-		void DestroyEntity(entity id) {
+
+		void DestroyEntityImplementation(entity id) {
 			//Destroys all Components
 			for (size_t i = 0; i < MAX_COMPONENTS; i++) {
 				if (signatures[id][i] == true) {
@@ -111,24 +229,18 @@ class ComponentManager {
 			unusedEntityIdentifiers.push_back(id);
 		}
 
-		/**
-		 * Adds a component to an entity. When multiple components are specified the functions calls itself recursively 
-		 * until all components are added to the entity. 
-		 *
-		 * @param id The ID of the entity that we add components to
-		 * @tparam first The component we add
-		 * @tparam rest The components we will add recursively
-		 */
+
 		template<typename Component, typename... Components>
-		void AddComponent(entity id, Component const& first, Components const&... rest) {
+		void AddComponentImplementation(entity id, Component const& first, Components const&... rest) {
 			//If the component array for this component type does not exist created and add it
-			if (componentTypeToIndexMap.find(typeid(first)) == componentTypeToIndexMap.end()) { 
+			if (componentTypeToIndexMap.find(typeid(first)) == componentTypeToIndexMap.end()) {
 				size_t index = componentArrays.size();
 				ComponentArray<Component> *component = new ComponentArray<Component>;
 				componentArrays.push_back(std::unique_ptr<IComponentArray>(component));
 				static_cast<ComponentArray<Component>*>(componentArrays[index].get())->AddComponent(id, first);
 				componentTypeToIndexMap[typeid(first)] = index;
-			} else { //else add the component to its component array
+			}
+			else { //else add the component to its component array
 				static_cast<ComponentArray<Component>*>(componentArrays[componentTypeToIndexMap[typeid(first)]].get())->AddComponent(id, first);
 			}
 
@@ -137,23 +249,14 @@ class ComponentManager {
 
 			if constexpr (sizeof...(rest) > 0) { //If more component have to be added call AddComponent recursively
 				AddComponent(id, rest...);
-			} else { //else Tell the SystemManager to Update the systems compatible entity lists
+			}
+			else { //else Tell the SystemManager to Update the systems compatible entity lists
 				SystemManager::FindCompatibleEntities();
 			}
 		}
 
-		/**
-		 * Removes a component from an entity. When multiple components are specified the functions calls itself recursively
-		 * until all components are removed from the entity.
-		 *
-		 * @param id The ID of the entity that we remove components from
-		 * @tparam first The component we remove
-		 * @tparam rest The components we will remove recursively
-		 * @throws Throws if this component type does not have a component array.
-		 * @note Only throws in Debug mode.
-		 */
 		template<typename Component, typename... Components>
-		void RemoveComponent(entity id, Component const& first, Components const&... rest) {
+		void RemoveComponentImplementation(entity id, Component const& first, Components const&... rest) {
 			assert(componentTypeToIndexMap.find(typeid(first)) != componentTypeToIndexMap.end() && "Component has not ComponentArray");
 
 			//Remove Component
@@ -167,60 +270,21 @@ class ComponentManager {
 			}
 		}
 
-		/**
-		 * Returns a component of type T from the specified entity
-		 *
-		 * @param entityID The ID of the entity who we will return the component from.
-		 * @tparam T The type of component we want to return
-		 * @returns Component of type T from the specified entity
-		 */
 		template<typename T>
-		T& GetComponent(entity entityID) {
+		T& GetComponentImplementation(entity entityID) {
 			return static_cast<ComponentArray<T>*>(componentArrays[componentTypeToIndexMap[typeid(T)]].get())->GetData(entityID);
 		}
 
-		/**
-		 * Returns the index of a component for the componentArrays vector
-		 *
-		 * @param componentType The type of the component whose index we want
-		 * @returns size_t Index into componentArrays
-		 */
-		size_t GetComponentIndex(std::type_index componentType) {
+		size_t GetComponentIndexImplementation(std::type_index componentType) {
 			assert(componentTypeToIndexMap.find(componentType) != componentTypeToIndexMap.end() && "ComponentType Array is not yet created");
 			return componentTypeToIndexMap[componentType];
 		}
 
-		/**
-		 * Returns an entity's signature
-		 *
-		 * @param entityID ID of the entity whose signature we want
-		 * @returns std::bitset<MAX_COMPONENTS> The entity's signature
-		 */
-		std::bitset<MAX_COMPONENTS> GetSignature(entity entityID) {
+		std::bitset<MAX_COMPONENTS> GetSignatureImplementation(entity entityID) {
 			return signatures[entityID];
 		}
 
-		/**
-		 * Returns the Vector containing all entity ID's
-		 *
-		 * @returns std::vector<entity> The vector containing all entity ID's
-		 */
-		std::vector<entity> GetEntityVector() {
+		std::vector<entity> GetEntityVectorImplementation() {
 			return entityIdentifiers;
 		}
-
-	private:
-		//Singleton--
-		ComponentManager() = default;
-		~ComponentManager() = default;
-		ComponentManager(const ComponentManager&) = delete;
-		ComponentManager& operator=(const ComponentManager&) = delete;
-		//Singleton--
-
-		unsigned int entityCount = 0;										//Current existing entities
-		std::vector<entity> unusedEntityIdentifiers; 						//List of not existing Entities
-		std::vector<entity> entityIdentifiers; 								//List of existing Entities
-		std::unordered_map<entity, std::bitset<MAX_COMPONENTS>> signatures; //Entity Signatures
-		std::unordered_map<std::type_index, size_t> componentTypeToIndexMap;//Map from Component Type to Index in componentArrays
-		std::vector<std::unique_ptr<IComponentArray>> componentArrays; 		//List of Component Arrays
 	};

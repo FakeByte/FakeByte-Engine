@@ -40,6 +40,7 @@
     <ClInclude Include="src\ECS\Core\SystemManager.h" />
     <ClInclude Include="src\Debug\InstrumentationTimer.h" />
     <ClInclude Include="src\Debug\Instrumentor.h" />
+    <ClInclude Include="src\Sorting\MergeSort.h" />
     <ClInclude Include="src\Time\Timer.h" />
     <ClInclude Include="src\ECS\constants\Constants.h" />
     <ClInclude Include="src\ECS\types\EntityId.h" />

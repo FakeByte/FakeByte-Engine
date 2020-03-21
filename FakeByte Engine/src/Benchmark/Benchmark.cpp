@@ -76,7 +76,7 @@ void Benchmark::BenchmarkTestImplementation(long long amount) {
 
 	//BENCHMARK TEST 1: Iterates until the written amount and creates that much entities
 	for (int i = 0; i < amount; i++) {
-		ComponentManager::GetInstance().CreateEntity();
+		ComponentManager::CreateEntity();
 	}
 	
 	//Creating
@@ -85,10 +85,10 @@ void Benchmark::BenchmarkTestImplementation(long long amount) {
 
 	//2: Adding components to the entity according to the number of entities in the list
 
-	std::vector<entity> entities = ComponentManager::GetInstance().GetEntityVector();
+	std::vector<entity> entities = ComponentManager::GetEntityVector();
 	t.reset();
 	for (int i = 0; i < entities.size(); i++) {
-		ComponentManager::GetInstance().AddComponent(entities[i], i);
+		ComponentManager::AddComponent(entities[i], i);
 	}
 
 	//Adding
@@ -108,7 +108,7 @@ void Benchmark::BenchmarkTestImplementation(long long amount) {
 	t.reset();
 	SystemManager::GetInstance().Step();
 	for(int i=0;i < entities.size();i++){ 
-		ComponentManager::GetInstance().DestroyEntity(entities[i]); 
+		ComponentManager::DestroyEntity(entities[i]); 
 	}
 
 	outputFile << "<td>" << t.elapsedSeconds() << "</td>";
