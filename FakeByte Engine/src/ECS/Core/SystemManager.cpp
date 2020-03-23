@@ -1,7 +1,7 @@
 #include "SystemManager.h"
 #include "System.h"
 #include "Sorting\MergeSort.h"
-#include <vector>
+#include "Algorithm\BinaryFind.h"
 
 #include <iostream>
 
@@ -12,6 +12,10 @@ SystemManager & SystemManager::GetInstance() {
 
 void SystemManager::RegisterSystem(System & system) {
 	GetInstance().RegisterSystemImplementation(system);
+}
+
+void SystemManager::UnregisterSystem(System &system) {
+	GetInstance().UnregisterSystemImplementation(system);
 }
 
 void SystemManager::SortSystemsArray() {
@@ -31,6 +35,20 @@ void SystemManager::RegisterSystemImplementation(System & system) {
 	System* s = &system;
 	systems.push_back(&system);
 	SortSystemsArrayImplementation();
+}
+
+
+void SystemManager::UnregisterSystemImplementation(System &system) {
+	auto it = Algorithm::BinaryFind<System>(0, systems.size()-1, system);
+	if (it != systems.end()) {
+		auto i = std::distance(systems.begin(), it);
+		systems[i] = systems[systems.end];
+		systems.pop_back();
+	}
+	else {
+		std::cout << "System not found!" << std::endl;
+		std::cout << std::endl;
+	}
 }
 
 void SystemManager::SortSystemsArrayImplementation() {

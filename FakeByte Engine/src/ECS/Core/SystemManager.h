@@ -29,6 +29,7 @@
 
 /* INCLUDES */
 #include <vector>
+#include <algorithm>
 
 #include "System.h"
 
@@ -54,6 +55,8 @@ public:
 	 * @param &system The system we want to add
 	 */
 	static void RegisterSystem(System &system);
+
+	void UnregisterSystem(System &system);
 	/**
 	 * Sorts the systems array from high priority to low priority
 	 */
@@ -85,4 +88,5 @@ private:
 	void SortSystemsArrayImplementation();
 	void StepImplementation();
 	void FindCompatibleEntitiesImplementation();
+	void UnregisterSystemImplementation(System &system);
 };

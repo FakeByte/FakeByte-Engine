@@ -57,9 +57,6 @@ class ComponentManager {
 			return instance;
 		}
 
-
-		//Functions
-
 		/**
 		 * Created an entity with zero or more Components
 		 *

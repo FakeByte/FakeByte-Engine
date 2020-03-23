@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Algorithm\BinaryFind.h" />
     <ClInclude Include="src\Benchmark\Benchmark.h" />
     <ClInclude Include="src\ECS\Core\Component.h" />
     <ClInclude Include="src\ECS\Core\ComponentArray.h" />

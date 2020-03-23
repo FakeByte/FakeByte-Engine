@@ -43,7 +43,8 @@ int main() {
 		r2.SetPriority(LOW_SYSTEM_PRIORITY);
 		RenderSystem r3;
 		r3.SetPriority(HIGHEST_SYSTEM_PRIORITY);
-
+		
+		SystemManager::UnregisterSystem<T>(r3);
 		//SystemManager::SortSystemsArray();
 
 		//Benchmark::BenchmarkTest();
